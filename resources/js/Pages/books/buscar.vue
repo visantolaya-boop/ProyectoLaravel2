@@ -1,6 +1,6 @@
 <script setup>
 import BreezeAuthenticatedLayout from "@/Layouts/Authenticated.vue";
-import { Head, usePage } from "@inertiajs/inertia-vue3";
+import { Head, useForm, usePage } from "@inertiajs/inertia-vue3";
 import { Inertia } from "@inertiajs/inertia";
 import NavLink from "@/Components/NavLink.vue";
 import Label from "@/Components/Label.vue";
@@ -8,6 +8,7 @@ import Input from "@/Components/Input.vue";
 import { computed, ref, watch } from "vue";
 import Pagination from "@/Components/Pagination.vue";
 import Swal from "sweetalert2";
+import StarIcon from "@/Components/StarIcon.vue";
 
 const props = defineProps({
     libros: Object,
@@ -15,10 +16,17 @@ const props = defineProps({
         type: Object,
         default: () => ({}),
     },
+    ubicaciones: {
+        type: Array,
+        default: () => ([]),
+    },
 });
 
 let search = ref(props.filters?.search || ""),
-    pageNumber = ref(1);
+    pageNumber = ref(1),
+    filterEstado = ref(''),
+    filterPuntuacion = ref(''),
+    filterUbicacion = ref('');
 
 let librosUrl = computed(() => {
     let url = new URL(route("books.buscar"));
@@ -33,11 +41,11 @@ let librosUrl = computed(() => {
 });
 
 watch(
-    search,
-    (value) => {
+    [search, filterEstado, filterPuntuacion,filterUbicacion],
+    ([s, e, p, u]) => {
         Inertia.get(
             route("books.buscar"),
-            { search: value },
+            { search: s, estado: e, puntuacion: p, ubicacion: u },
             {
                 preserveState: true,
                 replace: true,
@@ -48,6 +56,13 @@ watch(
     { deep: true },
 );
 
+
+const resetFiltros = () => {
+    search.value = "";
+    filterEstado.value = "";
+    filterPuntuacion.value = "";
+    filterUbicacion.value="";
+}
 const eliminarLibro = (id, titulo) => {
     Swal.fire({
         title: "Estas seguro?",
@@ -80,6 +95,29 @@ const eliminarLibro = (id, titulo) => {
         }
     });
 };
+
+const nuevaUbicacion = (event) => {
+    if (event.target.value === 'nueva') {
+        showModal.value = true;
+        form.ubicacion_id = null;    }
+}
+
+const showModal = ref(false),
+    ubicacionForm = useForm({
+        nombre: '',
+    });
+const guardarUbicacion = () => {
+    ubicacionForm.post(route('ubi.store'),
+        {
+            
+            onSuccess: () => {
+                showModal.value = false;
+                ubicacionForm.reset();
+            }
+        })
+}
+
+
 </script>
 
 <template>
@@ -96,36 +134,108 @@ const eliminarLibro = (id, titulo) => {
                 <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                     <div class="p-6 bg-white border-b border-gray-200">
                         <!--Form con los buscadores-->
-                        <div class="bg-white p-5 rounded-2xl shadow-sm border border-gray-100 mb-8">
-                            <form class="flex flex-col sm:flex-row gap-4 items-center justify-between">
+                        <div class="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 mb-8 transition-all">
+                            <form @submit.prevent class="space-y-6">
+                                <div class="flex flex-col lg:flex-row gap-4 items-center justify-between">
 
-                                <div class="relative w-full sm:max-w-md group">
-                                    <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                                        <svg class="w-5 h-5 text-gray-400 group-focus-within:text-blue-500 transition-colors"
-                                            xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-                                            stroke-width="1.5" stroke="currentColor">
-                                            <path stroke-linecap="round" stroke-linejoin="round"
-                                                d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z" />
-                                        </svg>
+                                    <div class="relative w-full lg:max-w-xl group">
+                                        <div
+                                            class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                            <svg class="w-5 h-5 text-gray-400 group-focus-within:text-blue-500 transition-colors"
+                                                xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                                stroke-width="1.5" stroke="currentColor">
+                                                <path stroke-linecap="round" stroke-linejoin="round"
+                                                    d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z" />
+                                            </svg>
+                                        </div>
+                                        <Input v-model="search" placeholder="Buscar por título, autor..."
+                                            class="block w-full pl-10 pr-4 py-2.5 bg-gray-50 border-transparent focus:border-blue-500 focus:bg-white focus:ring-4 focus:ring-blue-100 rounded-xl transition-all outline-none text-sm" />
                                     </div>
-                                    <Input v-model="search" name="buscarT" placeholder="Buscar por título, autor..."
-                                        class="block w-full pl-10 pr-4 py-2.5 bg-gray-50 border-transparent focus:border-blue-500 focus:bg-white focus:ring-4 focus:ring-blue-100 rounded-xl transition-all outline-none" />
+
+                                    <NavLink :href="route('books.create')"
+                                        class="w-full lg:w-auto inline-flex justify-center items-center gap-2 bg-green-600 hover:bg-green-700 text-white px-6 py-2.5 rounded-xl font-bold transition-all shadow-md shadow-green-100 active:scale-95 text-sm">
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none"
+                                            viewBox="0 0 24 24" stroke="currentColor">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                d="M12 4v16m8-8H4" />
+                                        </svg>
+                                        Nuevo Libro
+                                    </NavLink>
                                 </div>
 
-                                <NavLink :href="route('books.create')"
-                                    class="w-full sm:w-auto inline-flex justify-center items-center gap-2 bg-green-600 hover:bg-green-700 text-white px-6 py-2.5 rounded-xl font-bold transition-all shadow-md shadow-green-100 active:scale-95">
-                                    <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none"
-                                        viewBox="0 0 24 24" stroke="currentColor">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                            d="M12 4v16m8-8H4" />
-                                    </svg>
-                                    Nuevo Libro
-                                </NavLink>
+                                <div class="flex flex-wrap items-center gap-4 pt-4 border-t border-gray-50">
+                                    <span class="text-xs font-bold uppercase text-gray-400 tracking-widest mr-2">Filtrar
+                                        por:</span>
+
+                                    <div class="flex items-center gap-2 bg-gray-50 border border-gray-200 rounded-xl px-3 focus-within:ring-2 focus-within:ring-blue-100">
+                                        <select v-model="filterEstado"
+                                            class="bg-transparent border-none focus:ring-0 text-sm py-2 pr-8 cursor-pointer">
+                                            <option value="">Estado</option>
+                                            <option value="Pendiente"> Pendiente</option>
+                                            <option value="Leyendo"> Leyendo</option>
+                                            <option value="Terminado"> Terminado</option>
+                                            <option value="Abandonado"> Abandonado</option>
+                                        </select>
+                                    </div>
+
+                                    <div
+                                        class="flex items-center gap-2 bg-gray-50 border border-gray-200 rounded-xl px-3 focus-within:ring-2 focus-within:ring-blue-100">
+                                        <StarIcon class="text-green-400 w-5 h-5" />
+
+                                        <select v-model="filterPuntuacion"
+                                            class="bg-transparent border-none focus:ring-0 text-sm py-2 pr-8 cursor-pointer">
+                                            <option value="">Puntuación</option>
+                                            <option value="5">5 Estrellas</option>
+                                            <option value="4">4 Estrellas</option>
+                                            <option value="3">3 Estrellas</option>
+                                            <option value="2">2 Estrellas</option>
+                                            <option value="1">1 Estrella</option>
+                                            <option value="0">0 Estrellas</option>
+                                        </select>
+                                    </div>
+                                    <div
+                                        class="flex items-center gap-2 bg-gray-50 border border-gray-200 rounded-xl px-3 focus-within:ring-2 focus-within:ring-blue-100">
+                                        <select v-model="filterUbicacion"
+                                            class="bg-transparent border-none focus:ring-0 text-sm py-2 pr-8 cursor-pointer"
+                                            @change="nuevaUbicacion"
+                                            >
+                                            <option value="">Ubicación</option>
+                                            <option v-for="u in props.ubicaciones" :key="u.id" :value="u.nombre">
+                                                {{ u.nombre }}
+                                            </option>
+                                            <option value="nueva">
+                                            Añadir nueva ubicación
+                                            </option>
+                                        </select>
+                                    </div>
+                                    <!--  -->
+                                    <div v-if="showModal"
+                                class="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
+                                <div class="bg-white p-6 rounded-lg shadow-xl w-96">
+                                    <h3 class="text-lg font-bold mb-4">Nueva Ubicación</h3>
+
+                                    <input v-model="ubicacionForm.nombre" type="text"
+                                        placeholder="Nombre de la estantería..." class="w-full border p-2 mb-4" />
+
+                                    <div class="flex justify-end gap-2">
+                                        <button type="button" @click="showModal = false">Cancelar</button>
+                                        <button type="button" @click="guardarUbicacion"
+                                            :disabled="ubicacionForm.processing"
+                                            class="bg-blue-600 text-white px-4 py-2 rounded">
+                                            Guardar
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                                    <!--  -->
+                                    <button @click="resetFiltros" type="button"
+                                        class="text-xs font-semibold text-blue-600 hover:text-blue-800 underline transition">
+                                        Limpiar filtros
+                                    </button>
+                                </div>
                             </form>
 
-                            <div class="my-5 border-t border-gray-100"></div>
-
-                            <div class="flex justify-center sm:justify-start">
+                            <div class="mt-6 flex justify-center lg:justify-start px-2">
                                 <Pagination :links="libros.links" />
                             </div>
                         </div>
@@ -140,7 +250,6 @@ const eliminarLibro = (id, titulo) => {
                                         " :alt="libro.titulo"
                                         class="w-24 h-36 lg:w-32 lg:h-48 object-cover rounded shadow-sm" />
                                 </div>
-
                                 <div class="flex-grow flex flex-col space-y-1">
                                     <div class="text-lg font-bold text-gray-800 leading-tight">
                                         {{ libro.titulo }}

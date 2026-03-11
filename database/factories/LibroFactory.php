@@ -22,6 +22,7 @@ class LibroFactory extends Factory
             'paginas' => $this->faker->numberBetween(80,1200),
             'genero' => $this->faker->randomElement(['Fantasía','Ciencia ficción','Drama','Historia','Romance','Terror']),
             'portada' => null,
+            'ubicacion_id' => $this->faker->numberBetween(1,3)
         ];
     }
 }

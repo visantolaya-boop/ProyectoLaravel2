@@ -19,7 +19,6 @@ class LecturaFactory extends Factory
             'inicio_lectura' => $this->faker->dateTimeBetween('-1 year', 'now'),
             'final_lectura' => $this->faker->optional()->dateTimeBetween('-1 year', 'now'),
             'tiempo_lectura' => $this->faker->numberBetween(1, 60),
-            'paginas_diarias' => $this->faker->numberBetween(5, 80),
             'estado' => $this->faker->randomElement([
                         'Pendiente',
         'Leyendo',

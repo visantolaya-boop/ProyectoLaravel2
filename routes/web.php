@@ -2,6 +2,8 @@
 
 use App\Http\Controllers\LibroController;
 use App\Http\Controllers\LecturaController;
+use App\Http\Controllers\UbicacionController;
+use App\Models\Ubicacion;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -52,4 +54,11 @@ Route::put('/reseña/{id}', [LecturaController::class, 'update'])->name('reseña
 
 Route::get('/informacion', [LecturaController::class, 'informe'])->name('reseñas.informe');
 
+Route::get('/ubicacion/crear', [UbicacionController::class, 'create'])->name('ubi.create');
+
+Route::post('/ubicacion',[UbicacionController::class, 'store'])->name("ubi.store");
+
+Route::delete('/ubicacion/{id}', [UbicacionController::class, 'destroy'])->name('ubi.destroy');
+
+Route::get('/ubicaciones', [UbicacionController::class, 'index'])->name('ubi.index');
 require __DIR__.'/auth.php';

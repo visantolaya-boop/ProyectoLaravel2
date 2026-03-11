@@ -35,10 +35,10 @@ public function reseña($id){
     $datos = $request->validate([
         'estado' => 'required|string',
         'puntuacion'=>'required|integer',
-        'final_lectura'=>'date',
+        'final_lectura'=>'date|nullable',
         'inicio_lectura'=>'date|required',
-        'tiempo_lectura'=>'integer',
-        'reseña'=>'string|max:255',
+        'tiempo_lectura'=>'integer|nullable',
+        'reseña'=>'string|max:255|nullable',
     ]);
 
     $reseña = Lectura::findOrFail($id);
@@ -52,7 +52,7 @@ public function reseña($id){
     $puntuaciones = Lectura::select('puntuacion', DB::raw('count(*) as total'))
         ->whereNotNull('puntuacion')
         ->groupBy('puntuacion')
-        ->pluck('total', 'puntuacion'); // Crea un mapa [estrella => cantidad]
+        ->pluck('total', 'puntuacion'); 
 
     $estados = Lectura::select('estado', DB::raw('count(*) as total'))
         ->groupBy('estado')

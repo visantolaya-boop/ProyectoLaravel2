@@ -16,14 +16,12 @@ class CreateLecturasTable extends Migration
         Schema::create('lecturas', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('id_libro');
-            $table->date('inicio_lectura');
+            $table->date('inicio_lectura')->nullable();
             $table->date('final_lectura')->nullable();
-            $table->integer('tiempo_lectura');
-            $table->string('paginas_diarias');
+            $table->integer('tiempo_lectura')->nullable();
             $table->string('estado')->index();
-            $table->string('puntuacion')->index();
+            $table->string('puntuacion')->index()->nullable();
             $table->string('reseña')->nullable();
-
 
             $table->timestamps();
 

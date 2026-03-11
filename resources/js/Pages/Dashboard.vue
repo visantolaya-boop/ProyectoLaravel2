@@ -26,6 +26,9 @@ import Input from '@/Components/Input.vue';
                         <div><NavLink :href="route('books.buscar')" :active="route().current('books.buscar')">Buscar Libros</NavLink> </div>
                     <!--Informacion General: -->
                         <div><NavLink :href="route('reseñas.informe')" :active="route().current('reseñas.informe')">Informe General</NavLink> </div>    
+                    <!-- Gestion de ubicaciones -->
+                        <div><NavLink :href="route('ubi.index')" :active="route().current('ubi.gestion')">Gestionar Ubicaciones</NavLink> </div>    
+
                     </div>
                 </div>
             </div>

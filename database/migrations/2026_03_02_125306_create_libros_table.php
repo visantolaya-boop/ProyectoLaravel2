@@ -11,7 +11,7 @@ class CreateLibrosTable extends Migration
      *
      * @return void
      */
-    public function up()
+    public function up() 
     {
         Schema::create('libros', function (Blueprint $table) {
             $table->id();
@@ -22,6 +22,8 @@ class CreateLibrosTable extends Migration
             $table->integer('paginas');
             $table->string('genero')->index();
             $table->string('portada')->nullable();
+            $table->foreignId('ubicacion_id')->nullable()->deafult(1)->constrained('ubicacion')->onDelete('set null');
+
 
             $table->timestamps();
         });
@@ -34,6 +36,11 @@ class CreateLibrosTable extends Migration
      */
     public function down()
     {
+        Schema::table('libros', function (Blueprint $table) {
+        $table->dropForeign(['ubicacion_id']);
+        $table->dropColumn('ubicacion_id');
+        });
+        
         Schema::dropIfExists('libros');
     }
 }
