@@ -161,23 +161,23 @@ const guardarGenero = () => {
 
 <template>
 
-    <Head title="Busqueda" />
+    <Head title="Búsqueda" />
     <BreezeAuthenticatedLayout>
         <template #header>
             <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-                Busqueda personalizada de libros
+                Búsqueda personalizada de libros
             </h2>
         </template>
-        <div class="py-12">
-            <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-                <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
-                    <div class="p-6 bg-white border-b border-gray-200">
-                        <!--Form con los buscadores-->
-                        <div class="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 mb-8 transition-all">
-                            <form @submit.prevent class="space-y-6">
-                                <div class="flex flex-col lg:flex-row gap-4 items-center justify-between">
 
-                                    <div class="relative w-full lg:max-w-xl group">
+        <div class="py-6 md:py-12">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg border-b border-gray-200">
+
+                    <div class="p-4 md:p-6 bg-white">
+                        <div class="bg-white p-4 md:p-6 rounded-2xl shadow-sm border border-gray-100 mb-8">
+                            <form @submit.prevent class="space-y-6">
+                                <div class="flex flex-col md:flex-row gap-4">
+                                    <div class="relative flex-grow group">
                                         <div
                                             class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                                             <svg class="w-5 h-5 text-gray-400 group-focus-within:text-blue-500 transition-colors"
@@ -187,217 +187,171 @@ const guardarGenero = () => {
                                                     d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z" />
                                             </svg>
                                         </div>
-                                        <Input v-model="search" placeholder="Buscar por título, autor..."
-                                            class="block w-full pl-10 pr-4 py-2.5 bg-gray-50 border-transparent focus:border-blue-500 focus:bg-white focus:ring-4 focus:ring-blue-100 rounded-xl transition-all outline-none text-sm" />
+                                        <Input v-model="search" placeholder="Título, autor..."
+                                            class="block w-full pl-10 pr-4 py-2.5 bg-gray-50 border-transparent focus:border-blue-500 focus:bg-white focus:ring-4 focus:ring-blue-100 rounded-xl transition-all text-sm" />
                                     </div>
                                     <NavLink :href="route('books.create')"
-                                        class="w-full lg:w-auto inline-flex justify-center items-center gap-2 bg-green-600 hover:bg-green-700 text-white px-6 py-2.5 rounded-xl font-bold transition-all shadow-md shadow-green-100 active:scale-95 text-sm">
+                                        class="w-full md:w-auto inline-flex justify-center items-center gap-2 bg-green-600 hover:bg-green-700 text-white px-6 py-2.5 rounded-xl font-bold transition-all shadow-md active:scale-95 text-sm">
                                         <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none"
                                             viewBox="0 0 24 24" stroke="currentColor">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                                 d="M12 4v16m8-8H4" />
                                         </svg>
-                                        Nuevo Libro
+                                        <span>Nuevo Libro</span>
                                     </NavLink>
                                 </div>
 
-                                <div class="flex flex-wrap items-center gap-4 pt-4 border-t border-gray-50">
-                                    <span class="text-xs font-bold uppercase text-gray-400 tracking-widest mr-2">Filtrar
-                                        por:</span>
+                                <div class="pt-4 border-t border-gray-50">
+                                    <p class="text-xs font-bold uppercase text-gray-400 tracking-widest mb-3">Filtrar
+                                        por:</p>
 
-                                    <div
-                                        class="flex items-center gap-2 bg-gray-50 border border-gray-200 rounded-xl px-3 focus-within:ring-2 focus-within:ring-blue-100">
-                                        <select v-model="filterEstado"
-                                            class="bg-transparent border-none focus:ring-0 text-sm py-2 pr-8 cursor-pointer">
-                                            <option value="">Estado</option>
-                                            <option value="Pendiente"> Pendiente</option>
-                                            <option value="Leyendo"> Leyendo</option>
-                                            <option value="Terminado"> Terminado</option>
-                                            <option value="Abandonado"> Abandonado</option>
-                                        </select>
-                                    </div>
+                                    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
+                                        <div
+                                            class="flex items-center bg-gray-50 border border-gray-200 rounded-xl px-3 focus-within:ring-2 focus-within:ring-blue-100">
+                                            <select v-model="filterEstado"
+                                                class="w-full bg-transparent border-none focus:ring-0 text-sm py-2 cursor-pointer">
+                                                <option value="">Cualquier Estado</option>
+                                                <option value="Pendiente">Pendiente</option>
+                                                <option value="Leyendo">Leyendo</option>
+                                                <option value="Terminado">Terminado</option>
+                                                <option value="Abandonado">Abandonado</option>
+                                            </select>
+                                        </div>
 
-                                    <div
-                                        class="flex items-center gap-2 bg-gray-50 border border-gray-200 rounded-xl px-3 focus-within:ring-2 focus-within:ring-blue-100">
-                                        <StarIcon class="text-green-400 w-5 h-5" />
+                                        <div
+                                            class="flex items-center bg-gray-50 border border-gray-200 rounded-xl px-3 focus-within:ring-2 focus-within:ring-blue-100">
+                                            <StarIcon class="text-green-400 w-4 h-4" />
+                                            <select v-model="filterPuntuacion"
+                                                class="w-full bg-transparent border-none focus:ring-0 text-sm py-2 cursor-pointer">
+                                                <option value="">Cualquier Puntuación</option>
+                                                <option v-for="n in [5, 4, 3, 2, 1, 0]" :key="n" :value="n">{{ n }} Estrellas
+                                                </option>
+                                            </select>
+                                        </div>
 
-                                        <select v-model="filterPuntuacion"
-                                            class="bg-transparent border-none focus:ring-0 text-sm py-2 pr-8 cursor-pointer">
-                                            <option value="">Puntuación</option>
-                                            <option value="5">5 Estrellas</option>
-                                            <option value="4">4 Estrellas</option>
-                                            <option value="3">3 Estrellas</option>
-                                            <option value="2">2 Estrellas</option>
-                                            <option value="1">1 Estrella</option>
-                                            <option value="0">0 Estrellas</option>
-                                        </select>
-                                    </div>
-                                    <div
-                                        class="flex items-center gap-2 bg-gray-50 border border-gray-200 rounded-xl px-3 focus-within:ring-2 focus-within:ring-blue-100">
-                                        <select v-model="filterUbicacion"
-                                            class="bg-transparent border-none focus:ring-0 text-sm py-2 pr-8 cursor-pointer"
-                                            @change="nuevaUbicacion">
-                                            <option value="">Ubicación</option>
-                                            <option v-for="u in props.ubicaciones" :key="u.id" :value="u.nombre">
-                                                {{ u.nombre }}
-                                            </option>
-                                            <option value="nueva">
-                                                Añadir nueva ubicación
-                                            </option>
-                                        </select>
-                                    </div>
-                                    <div
-                                        class="flex items-center gap-2 bg-gray-50 border border-gray-200 rounded-xl px-3 focus-within:ring-2 focus-within:ring-blue-100">
-                                        <select v-model="filterGenero"
-                                            class="bg-transparent border-none focus:ring-0 text-sm py-2 pr-8 cursor-pointer"
-                                            @change="nuevoGenero">
-                                            <option value="">Genero</option>
-                                            <option v-for="g in props.generos" :key="g.id" :value="g.nombre">
-                                                {{ g.nombre }}
-                                            </option>
-                                            <option value="nuevo">
-                                                Añadir nuevo genero
-                                            </option>
-                                        </select>
-                                    </div>
-                                    <!-- Ubicacion Model -->
-                                    <div v-if="showModal"
-                                        class="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
-                                        <div class="bg-white p-6 rounded-lg shadow-xl w-96">
-                                            <h3 class="text-lg font-bold mb-4">Nueva Ubicación</h3>
+                                        <div
+                                            class="flex items-center bg-gray-50 border border-gray-200 rounded-xl px-3 focus-within:ring-2 focus-within:ring-blue-100">
+                                            <select v-model="filterUbicacion"
+                                                class="w-full bg-transparent border-none focus:ring-0 text-sm py-2 cursor-pointer"
+                                                @change="nuevaUbicacion">
+                                                <option value="">Ubicación</option>
+                                                <option v-for="u in props.ubicaciones" :key="u.id" :value="u.nombre">{{
+                                                    u.nombre
+                                                    }}</option>
+                                                <option value="nueva" class="text-blue-600 font-bold">+ Nueva ubicación
+                                                </option>
+                                            </select>
+                                        </div>
 
-                                            <input v-model="ubicacionForm.nombre" ref="inputNombreUbicacion" type="text"
-                                                placeholder="Nombre de la ubicacion..." class="w-full border p-2 mb-4"
-                                                @input="ubicacionForm.clearErrors('nombre')" />
-
-                                            <p v-if="ubicacionForm.errors.nombre"
-                                                class="text-red-500 text-xs mt-1 italic">
-                                                {{ ubicacionForm.errors.nombre }}
-                                            </p>
-
-
-                                            <div class="flex justify-end gap-2">
-                                                <button type="button" @click="showModal = false">Cancelar</button>
-                                                <button type="button" @click="guardarUbicacion"
-                                                    :disabled="ubicacionForm.processing"
-                                                    class="bg-blue-600 text-white px-4 py-2 rounded">
-                                                    Guardar
-                                                </button>
-                                            </div>
+                                        <div
+                                            class="flex items-center bg-gray-50 border border-gray-200 rounded-xl px-3 focus-within:ring-2 focus-within:ring-blue-100">
+                                            <select v-model="filterGenero"
+                                                class="w-full bg-transparent border-none focus:ring-0 text-sm py-2 cursor-pointer"
+                                                @change="nuevoGenero">
+                                                <option value="">Género</option>
+                                                <option v-for="g in props.generos" :key="g.id" :value="g.nombre">{{
+                                                    g.nombre }}
+                                                </option>
+                                                <option value="nuevo" class="text-blue-600 font-bold">+ Nuevo género
+                                                </option>
+                                            </select>
                                         </div>
                                     </div>
-                                    <!--Genero Model  -->
-                                    <div v-if="showModal2"
-                                        class="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
-                                        <div class="bg-white p-6 rounded-lg shadow-xl w-96">
-                                            <h3 class="text-lg font-bold mb-4">Nuevo Genero</h3>
 
-                                            <input v-model="generoForm.nombre" ref="inputNombreGenero" type="text"
-                                                placeholder="Nombre del genero..." class="w-full border p-2 mb-4" 
-                                                @input="generoForm.clearErrors('nombre')" />
-                                                
-                                            <p v-if="generoForm.errors.nombre"
-                                                class="text-red-500 text-xs mt-1 italic">
-                                                {{ generoForm.errors.nombre }}
-                                            </p>
-
-                                            <div class="flex justify-end gap-2">
-                                                <button type="button" @click="showModal2 = false">Cancelar</button>
-                                                <button type="button" @click="guardarGenero"
-                                                    :disabled="generoForm.processing"
-                                                    class="bg-blue-600 text-white px-4 py-2 rounded">
-                                                    Guardar
-                                                </button>
-                                            </div>
-                                        </div>
+                                    <div class="mt-4 flex justify-end">
+                                        <button @click="resetFiltros" type="button"
+                                            class="text-xs font-semibold text-blue-600 hover:text-blue-800 underline transition">
+                                            Limpiar todos los filtros
+                                        </button>
                                     </div>
-                                    <!---->
-                                    <button @click="resetFiltros" type="button"
-                                        class="text-xs font-semibold text-blue-600 hover:text-blue-800 underline transition">
-                                        Limpiar filtros
-                                    </button>
                                 </div>
                             </form>
-
-                            <div class="mt-6 flex justify-center lg:justify-start px-2">
-                                <Pagination :links="libros.links" />
-                            </div>
                         </div>
 
-                        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 p-4">
+                        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
                             <div v-for="libro in libros.data" :key="libro.id"
-                                class="shadow-md p-6 bg-white rounded-lg flex flex-row items-start space-x-4 border border-gray-100">
+                                class="shadow-sm hover:shadow-md transition-shadow p-4 md:p-5 bg-white rounded-2xl flex flex-col sm:flex-row items-center sm:items-start gap-4 border border-gray-100">
+
                                 <div class="flex-shrink-0">
-                                    <img :src="libro.portada
-                                        ? '/storage/' + libro.portada
-                                        : '/storage/imagenes/default_book.jpg'
-                                        " :alt="libro.titulo"
-                                        class="w-24 h-36 lg:w-32 lg:h-48 object-cover rounded shadow-sm" />
+                                    <img :src="libro.portada ? '/storage/' + libro.portada : '/storage/imagenes/default_book.jpg'"
+                                        :alt="libro.titulo"
+                                        class="w-32 h-48 sm:w-28 sm:h-40 object-cover rounded-xl shadow-sm" />
                                 </div>
-                                <div class="flex-grow flex flex-col space-y-1">
-                                    <div class="text-lg font-bold text-gray-800 leading-tight">
-                                        {{ libro.titulo }}
-                                    </div>
-                                    <div class="text-sm text-gray-600">
-                                        <strong>Autor:</strong>
-                                        {{ libro.autor }}
-                                    </div>
-                                    <div class="text-sm text-gray-600">
-                                        <strong>Editorial:</strong>
-                                        {{ libro.editorial }}
-                                    </div>
-                                    <div class="text-sm text-gray-600">
-                                        <strong>Género:</strong>
-                                        {{ libro.genero.nombre }}
-                                    </div>
-                                    <div class="text-sm text-gray-600">
-                                        <strong>Año:</strong> {{ libro.anio }}
+
+                                <div class="flex-grow flex flex-col w-full">
+                                    <div class="flex justify-between items-start">
+                                        <h3 class="text-lg font-bold text-gray-800 leading-tight mb-1">{{ libro.titulo
+                                            }}</h3>
                                     </div>
 
-                                    <div class="flex items-center space-x-1 py-1">
-                                        <span class="text-sm font-bold text-gray-700 mr-1">Puntuación:</span>
+                                    <div class="grid grid-cols-2 gap-x-2 gap-y-1 mb-3">
+                                        <p class="text-xs text-gray-500"><strong>Autor:</strong> {{ libro.autor }}</p>
+                                        <p class="text-xs text-gray-500"><strong>Año:</strong> {{ libro.anio }}</p>
+                                        <p class="text-xs text-gray-500"><strong>Género:</strong> {{ libro.genero.nombre
+                                            }}</p>
+                                        <p class="text-xs text-gray-500"><strong>Estado:</strong>
+                                            <span class="px-2 py-0.5 rounded-full bg-blue-50 text-blue-700 font-medium"
+                                                style="font-size: 10px;">
+                                                {{ libro.lecturas?.estado || 'Sin registrar' }}
+                                            </span>
+                                        </p>
+                                    </div>
+
+                                    <div class="flex items-center gap-1 mb-4">
                                         <div class="flex">
-                                            <svg v-for="i in 5" :key="i" class="w-4 h-4" :class="i <=
-                                                (libro.lecturas
-                                                    ?.puntuacion || 0)
-                                                ? 'text-green-400'
-                                                : 'text-gray-300'
-                                                " fill="currentColor" viewBox="0 0 20 20">
-                                                <path
-                                                    d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-                                            </svg>
+                                            <StarIcon v-for="i in 5" :key="i" class="w-4 h-4" :class="i <= (libro.lecturas?.puntuacion || 0)
+                                                ? 'text-green-400 fill-current'
+                                                : 'text-gray-200'" />
                                         </div>
                                     </div>
 
-                                    <div class="text-sm text-gray-600">
-                                        <strong>Estado:</strong>
-                                        {{ libro.lecturas?.estado }}
-                                    </div>
-
-                                    <div class="flex flex-wrap gap-2 pt-3">
-                                        <NavLink :href="route(
-                                            'books.reseña',
-                                            libro.lecturas?.id || 0,
-                                        )
-                                            " class="text-sm text-blue-600">Ver Reseña</NavLink>
-                                        <NavLink :href="route('books.editar', libro.id)
-                                            " class="bg-blue-500 text-white px-3 py-1 rounded text-xs font-bold">Editar
+                                    <div class="flex flex-wrap gap-2 mt-auto border-t border-gray-50 pt-3">
+                                        <NavLink :href="route('books.reseña', libro.lecturas?.id || 0)"
+                                            class="text-xs font-bold text-blue-600 px-3 py-2 bg-blue-50 rounded-lg hover:bg-blue-100 transition-colors">
+                                            Ver Reseña
                                         </NavLink>
-                                        <button @click="
-                                            eliminarLibro(
-                                                libro.id,
-                                                libro.titulo,
-                                            )
-                                            "
-                                            class="bg-red-500 hover:bg-red-700 text-white px-3 py-1 rounded text-xs font-bold transition-colors">
+                                        <NavLink :href="route('books.editar', libro.id)"
+                                            class="text-xs font-bold text-gray-700 px-3 py-2 bg-gray-100 rounded-lg hover:bg-gray-200 transition-colors">
+                                            Editar
+                                        </NavLink>
+                                        <button @click="eliminarLibro(libro.id, libro.titulo)"
+                                            class="text-xs font-bold text-white px-3 py-2 bg-red-500 rounded-lg hover:bg-red-600 transition-colors ml-auto">
                                             Eliminar
                                         </button>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        <Pagination :links="libros.links" />
+
+                        <div class="mt-10 flex justify-center">
+                            <Pagination :links="libros.links" />
+                        </div>
                     </div>
+                </div>
+            </div>
+        </div>
+
+        <div v-if="showModal || showModal2"
+            class="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center z-50 p-4 text-sm">
+            <div class="bg-white p-6 rounded-2xl shadow-2xl w-full max-w-md">
+                <h3 class="text-lg font-bold mb-4">{{ showModal ? 'Nueva Ubicación' : 'Nuevo Género' }}</h3>
+                <input v-if="showModal" v-model="ubicacionForm.nombre" ref="inputNombreUbicacion" type="text"
+                    placeholder="Nombre..." class="w-full border-gray-200 rounded-xl mb-2" />
+                <input v-else v-model="generoForm.nombre" ref="inputNombreGenero" type="text" placeholder="Nombre..."
+                    class="w-full border-gray-200 rounded-xl mb-2" />
+
+                <p v-if="(showModal ? ubicacionForm : generoForm).errors.nombre"
+                    class="text-red-500 text-xs mb-4 italic">
+                    {{ (showModal ? ubicacionForm : generoForm).errors.nombre }}
+                </p>
+
+                <div class="flex justify-end gap-3 mt-4">
+                    <button type="button" class="px-4 py-2 text-gray-500 font-medium"
+                        @click="showModal = false; showModal2 = false">Cancelar</button>
+                    <button type="button" @click="showModal ? guardarUbicacion() : guardarGenero()"
+                        class="bg-blue-600 text-white px-6 py-2 rounded-xl font-bold hover:bg-blue-700 transition-colors">
+                        Guardar
+                    </button>
                 </div>
             </div>
         </div>

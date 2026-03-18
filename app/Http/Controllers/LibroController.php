@@ -6,6 +6,7 @@ use Inertia\Inertia;
 
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\StoreLibroRequest;
 use App\Models\Genero;
 use App\Models\Lectura;
 use App\Models\Libro;
@@ -97,22 +98,13 @@ class LibroController extends Controller
         ]);
     }
 
-    public function update(Request $request, $id)
+    public function update(StoreLibroRequest $request, $id)
     {
         $libro = Libro::whereHas('ubicacion', function ($q) {
             $q->where('user_id', auth()->id());
         })->findOrFail($id);
 
-        $datos = $request->validate([
-            'titulo' => 'required|string|max:255',
-            'autor'  => 'required|string|max:255',
-            'anio'   => 'required|integer|digits:4',
-            'editorial' => 'string|required',
-            'paginas' => 'integer|required',
-            'genero_id' => 'required',
-            'ubicacion_id' => 'required',
-            'portada' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:2048'
-        ]);
+        $datos = $request->validated();
 
         //Logica de la imagen
         if ($request->hasFile('portada')) {
@@ -166,18 +158,9 @@ class LibroController extends Controller
         ]);
     }
 
-    public function store(Request $request)
+    public function store(StoreLibroRequest $request)
     {
-        $datos = $request->validate([
-            'titulo'    => 'required|string|max:255',
-            'autor'     => 'required|string|max:255',
-            'anio'      => 'required|integer|digits:4',
-            'editorial' => 'required|string',
-            'paginas'   => 'required|integer',
-            'genero_id'    => 'required',
-            'ubicacion_id' => 'required',
-            'portada'   => 'nullable|image|mimes:jpg,jpeg,png,webp|max:2048'
-        ]);
+        $datos = $request->validated();
 
         if ($request->hasFile('portada')) {
             $datos['portada'] = $request->file('portada')->store('portada', 'public');

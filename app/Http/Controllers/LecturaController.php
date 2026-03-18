@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\DB;
 use Inertia\Inertia;
 use App\Models\Lectura;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\StoreLecturaRequest;
 use Illuminate\Http\Request;
 use App\Models\Libro;
 use App\Models\Ubicacion;
@@ -31,16 +32,9 @@ public function reseña($id){
     return Inertia::render('books/form/reseñaFormulario', ['reseña' => $reseña]);
     }
 
-    public function update(Request $request, $id)
+    public function update(StoreLecturaRequest $request, $id)
 {
-    $datos = $request->validate([
-        'estado' => 'required|string',
-        'puntuacion'=>'required|integer',
-        'final_lectura'=>'date|nullable',
-        'inicio_lectura'=>'date|required',
-        'tiempo_lectura'=>'integer|nullable',
-        'reseña'=>'string|max:255|nullable',
-    ]);
+    $datos = $request->validated();
 
     $reseña = Lectura::findOrFail($id);
     $reseña->update($datos);

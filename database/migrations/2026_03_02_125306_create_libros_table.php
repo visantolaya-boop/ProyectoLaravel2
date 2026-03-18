@@ -20,9 +20,9 @@ class CreateLibrosTable extends Migration
             $table->smallInteger('anio')->index();
             $table->string('editorial')->index();
             $table->integer('paginas');
-            $table->foreignId('genero_id')->nullable()->deafult(1)->constrained('ubicacion')->onDelete('set null');
+            $table->foreignId('genero_id')->nullable()->deafault(1)->constrained('generos')->onDelete('set null');
             $table->string('portada')->nullable();
-            $table->foreignId('ubicacion_id')->nullable()->deafult(1)->constrained('ubicacion')->onDelete('set null');
+            $table->foreignId('ubicacion_id')->nullable()->deafault(1)->constrained('ubicacion')->onDelete('set null');
 
 
             $table->timestamps();

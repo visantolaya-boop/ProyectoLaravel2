@@ -113,21 +113,21 @@ const estrellasOrdenadas = computed(() => {
                         <h3 class="text-lg font-bold text-gray-800 mb-6">Estado de lectura</h3>
                         <div class="grid grid-cols-2 gap-4">
                             <div class="p-4 bg-emerald-50/50 rounded-2xl border border-emerald-100">
-                                <span class="text-emerald-600 text-xs font-bold uppercase tracking-wider">Leídos</span>
+                                <span class="text-emerald-600 text-[0.6rem] font-bold uppercase tracking-wider">Leídos</span>
                                 <p class="text-3xl font-bold text-emerald-700 mt-1">{{ stats.estados.terminados }}</p>
                             </div>
                             <div class="p-4 bg-blue-50/50 rounded-2xl border border-blue-100">
-                                <span class="text-blue-600 text-xs font-bold uppercase tracking-wider">Leyendo</span>
+                                <span class="text-blue-600 text-[0.6rem] font-bold uppercase tracking-wider">Leyendo</span>
                                 <p class="text-3xl font-bold text-blue-700 mt-1">{{ stats.estados.leyendo }}</p>
                             </div>
                             <div class="p-4 bg-orange-50/50 rounded-2xl border border-orange-100">
                                 <span
-                                    class="text-orange-600 text-xs font-bold uppercase tracking-wider">Pendientes</span>
+                                    class="text-orange-600 text-[0.6rem] font-bold uppercase tracking-wider">Pendientes</span>
                                 <p class="text-3xl font-bold text-orange-700 mt-1">{{ stats.estados.pendiente }}</p>
                             </div>
                             <div class="p-4 bg-rose-50/50 rounded-2xl border border-rose-100">
                                 <span
-                                    class="text-rose-600 text-xs font-bold uppercase tracking-wider">Abandonados</span>
+                                    class="text-rose-600 text-[0.6rem] font-bold uppercase tracking-wider">Abandonados</span>
                                 <p class="text-3xl font-bold text-rose-700 mt-1">{{ stats.estados.abandonados }}</p>
                             </div>
                         </div>
