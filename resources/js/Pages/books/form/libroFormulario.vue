@@ -2,7 +2,7 @@
 import BreezeAuthenticatedLayout from '@/Layouts/Authenticated.vue';
 import { Head, useForm } from '@inertiajs/inertia-vue3';
 import Input from '@/Components/Input.vue';
-import Label from '@/Components/Label.vue'; // Usa <label class="font-bold text-gray-700"> si no tienes el componente
+import Label from '@/Components/Label.vue'; 
 import { nextTick, ref } from 'vue';
 
 const props = defineProps({

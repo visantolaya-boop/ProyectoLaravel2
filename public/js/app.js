@@ -23763,7 +23763,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
- // Usa <label class="font-bold text-gray-700"> si no tienes el componente
+
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   __name: 'libroFormulario',
@@ -23919,7 +23919,7 @@ function _arrayWithHoles(r) { if (Array.isArray(r)) return r; }
 
 
 
- // Si no tienes este componente, usa <label> con clases
+
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   __name: 'reseñaFormulario',
@@ -24090,7 +24090,6 @@ __webpack_require__.r(__webpack_exports__);
         icon: "warning",
         showCancelButton: true,
         confirmButtonColor: "#ef4444",
-        // Rojo para eliminar
         cancelButtonColor: "#6b7280",
         confirmButtonText: "Sí, eliminar",
         cancelButtonText: "Cancelar",
@@ -24216,8 +24215,6 @@ function _arrayWithHoles(r) { if (Array.isArray(r)) return r; }
     var __expose = _ref.expose;
     __expose();
     var props = __props;
-
-    // Fix para el porcentaje: asegura que siempre devuelva un número
     var getPorcentaje = function getPorcentaje(valor) {
       var num = Number(valor);
       if (!props.stats.total_libros || props.stats.total_libros === 0) return 0;
@@ -24230,8 +24227,6 @@ function _arrayWithHoles(r) { if (Array.isArray(r)) return r; }
     var promedioPuntuacion = (0,vue__WEBPACK_IMPORTED_MODULE_2__.computed)(function () {
       var totalPuntos = 0;
       var totalVotos = 0;
-
-      // Iteramos sobre las estrellas asegurando conversión a número
       Object.entries(props.stats.estrellas).forEach(function (_ref2) {
         var _ref3 = _slicedToArray(_ref2, 2),
           estrella = _ref3[0],
@@ -24239,15 +24234,12 @@ function _arrayWithHoles(r) { if (Array.isArray(r)) return r; }
         var pts = Number(estrella);
         var cant = Number(cantidad);
         if (pts > 0) {
-          // Solo contamos libros puntuados para la media
           totalPuntos += pts * cant;
           totalVotos += cant;
         }
       });
       return totalVotos > 0 ? (totalPuntos / totalVotos).toFixed(1) : "0.0";
     });
-
-    // Ordenar estrellas de 5 a 0 para el gráfico
     var estrellasOrdenadas = (0,vue__WEBPACK_IMPORTED_MODULE_2__.computed)(function () {
       return Object.entries(props.stats.estrellas).sort(function (a, b) {
         return b[0] - a[0];
@@ -24292,7 +24284,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _Components_StarIcon_vue__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @/Components/StarIcon.vue */ "./resources/js/Components/StarIcon.vue");
 
 
- // Asegúrate de que la extensión sea correcta
+
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   __name: 'reseña',
@@ -24379,7 +24371,6 @@ __webpack_require__.r(__webpack_exports__);
         icon: "warning",
         showCancelButton: true,
         confirmButtonColor: "#ef4444",
-        // Rojo para eliminar
         cancelButtonColor: "#6b7280",
         confirmButtonText: "Sí, eliminar",
         cancelButtonText: "Cancelar",

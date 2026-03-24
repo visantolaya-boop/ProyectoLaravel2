@@ -14,7 +14,6 @@ const props = defineProps({
     }
 })
 
-// Fix para el porcentaje: asegura que siempre devuelva un número
 const getPorcentaje = (valor) => {
     const num = Number(valor);
     if (!props.stats.total_libros || props.stats.total_libros === 0) return 0;
@@ -30,11 +29,10 @@ const promedioPuntuacion = computed(() => {
     let totalPuntos = 0;
     let totalVotos = 0;
 
-    // Iteramos sobre las estrellas asegurando conversión a número
     Object.entries(props.stats.estrellas).forEach(([estrella, cantidad]) => {
         const pts = Number(estrella);
         const cant = Number(cantidad);
-        if (pts > 0) { // Solo contamos libros puntuados para la media
+        if (pts > 0) { 
             totalPuntos += pts * cant;
             totalVotos += cant;
         }
@@ -43,7 +41,6 @@ const promedioPuntuacion = computed(() => {
     return totalVotos > 0 ? (totalPuntos / totalVotos).toFixed(1) : "0.0";
 });
 
-// Ordenar estrellas de 5 a 0 para el gráfico
 const estrellasOrdenadas = computed(() => {
     return Object.entries(props.stats.estrellas).sort((a, b) => b[0] - a[0]);
 });

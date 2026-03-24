@@ -1,7 +1,7 @@
 <script setup>
 import BreezeAuthenticatedLayout from '@/Layouts/Authenticated.vue';
 import { Head, Link } from '@inertiajs/inertia-vue3';
-import NavLink from '@/Components/NavLink.vue'; // Asegúrate de que la extensión sea correcta
+import NavLink from '@/Components/NavLink.vue'; 
 import StarIcon from '@/Components/StarIcon.vue';
 
 const props = defineProps({

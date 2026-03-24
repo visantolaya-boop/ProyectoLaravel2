@@ -2,7 +2,7 @@
 import BreezeAuthenticatedLayout from '@/Layouts/Authenticated.vue';
 import { Head, useForm } from '@inertiajs/inertia-vue3';
 import Input from '@/Components/Input.vue';
-import Label from '@/Components/Label.vue'; // Si no tienes este componente, usa <label> con clases
+import Label from '@/Components/Label.vue'; 
 import { watch } from 'vue';
 
 const props = defineProps({

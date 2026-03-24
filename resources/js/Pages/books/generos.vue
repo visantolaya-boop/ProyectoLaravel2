@@ -21,7 +21,7 @@ const eliminarGenero = (id, nombre) => {
         text: `Vas a eliminar "${nombre}". Esta acción no se puede deshacer.`,
         icon: "warning",
         showCancelButton: true,
-        confirmButtonColor: "#ef4444", // Rojo para eliminar
+        confirmButtonColor: "#ef4444", 
         cancelButtonColor: "#6b7280",
         confirmButtonText: "Sí, eliminar",
         cancelButtonText: "Cancelar",

@@ -31,6 +31,7 @@ Route::get('/', function () {
     ]);
 }); 
 
+Route::redirect('/', '/buscar');
 
 //Libros 
 Route::get('/buscar', [LibroController::class, "buscar"])->name("books.buscar");
